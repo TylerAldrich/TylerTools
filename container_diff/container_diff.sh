@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 CONTAINER_1=$(docker run -it -d $1)
 CONTAINER_2=$(docker run -it -d $2)
@@ -17,7 +19,7 @@ docker container stop $CONTAINER_2
 
 echo "Removing timestamp info from filesystem dump before diffing..."
 
-python3 clean_dump.py $DUMPFILE_1
-python3 clean_dump.py $DUMPFILE_2
+python3 $SCRIPT_DIR/clean_dump.py $DUMPFILE_1
+python3 $SCRIPT_DIR/clean_dump.py $DUMPFILE_2
 
 diff "$DUMPFILE_1.processed" "$DUMPFILE_2.processed"
