@@ -15,7 +15,9 @@ docker export $CONTAINER_1 | tar tv > $DUMPFILE_1
 docker export $CONTAINER_2 | tar tv > $DUMPFILE_2
 
 docker container stop $CONTAINER_1
+docker container rm $CONTAINER_1
 docker container stop $CONTAINER_2
+docker container rm $CONTAINER_2
 
 echo "Removing timestamp info from filesystem dump before diffing..."
 
